@@ -1,30 +1,47 @@
 // App.js
-import React from 'react';
+import React, { Component } from 'react';
 import GroceryForm from './GroceryForm';
 import GroceryList from './GroceryList';
 
-let groceries = [
-  { id: 1, name: "Oranges" },
-  { id: 2, name: "Bananas" },
-  { id: 3, name: "Bread" }
-];
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      groceries: [],
+      name: ""
+    };
 
-const App = props => {
-  let handleFormSubmit = event => {
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleFormSubmit(event) {
     event.preventDefault();
     alert('Form was submitted');
-  };
+  }
 
-  let handleButtonClick = event => alert('Button was clicked');
+  handleChange(event) {
+      let newName = event.target.value;
+      this.setState({ name: newName });
+    }
 
-  return (
-    <div>
-      <h1>Grocery List React</h1>
-      <GroceryForm handleFormSubmit={handleFormSubmit} />
-      <GroceryList groceries={groceries} handleButtonClick={handleButtonClick} />
-    </div>
-  );
-};
+  handleButtonClick(event) {
+    alert('Button was clicked');
+  }
+
+  render() {
+    return(
+      <div>
+        <h1>Grocery List React</h1>
+        <GroceryForm handleFormSubmit={this.handleFormSubmit} name={this.stateName} />
+        <GroceryList
+          groceries={this.state.groceries}
+          handleButtonClick={this.handleButtonClick}
+        />
+      </div>
+    );
+  }
+}
 
 export default App;
-
